@@ -2,8 +2,10 @@
 
 ## Download
 
-Windows 10/11, 64-bit Intel/AMD PCs are the intended target. Native ARM builds
-are not provided. This is preview software; YouTube speed and compatibility vary.
+Windows 10/11, 64-bit Intel/AMD PCs are the primary target. A Linux x86-64
+preview is also available as a tar.gz archive and an AppImage; see the Linux
+section below. Native ARM builds are not provided. This is preview software;
+YouTube speed and compatibility vary.
 
 Open the project's [Windows preview release](https://github.com/Ahmadkhattak1/awesome-downloader/releases/tag/v0.1.0-preview.4)
 and download **Awesome-Downloader-Setup.exe** from Assets. You do not need a GitHub
@@ -17,6 +19,28 @@ of your download and the release's SHA-256 checksum before deciding to run it.
 Run the installer and follow the wizard. Launch **Awesome Downloader** from the
 Start menu. Keep the app installed at its chosen location so browser integration
 can find it.
+
+## Linux (preview)
+
+Linux x86-64 builds are published on the same release page as **tar.gz**
+archives and **AppImage** files. They are unsigned preview builds; verify the
+release's SHA-256 checksum before running one.
+
+- **AppImage:** make it executable and run it:
+  `chmod +x Awesome-Downloader-*.AppImage && ./Awesome-Downloader-*.AppImage`.
+  Some minimal distributions need FUSE installed to run AppImages.
+- **tar.gz:** extract it and run the executable inside:
+  `tar -xzf Awesome-Downloader-*.tar.gz && ./Awesome-Downloader-*-Linux/awesome-downloader`.
+
+The browser extension setup is the same "Load unpacked" flow described below:
+click **Copy extension folder path** in the app, open your browser's extensions
+page (`chrome://extensions` or `edge://extensions`), enable Developer mode, and
+load the copied folder. The app registers its native messaging manifest
+automatically for Chrome, Edge and Firefox under `~/.config` and `~/.mozilla`;
+there is no registry step on Linux.
+
+Downloads, settings and browser-integration files live in `~/.awesome-downloader`.
+Delete that directory to remove them.
 
 ## Enable video buttons (Chrome / Edge)
 

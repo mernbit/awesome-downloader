@@ -1,7 +1,8 @@
 # Awesome Downloader
 
-A Windows download manager with a compact desktop interface and browser video
-buttons. Original open-source implementation; not affiliated with Internet
+A download manager with a compact desktop interface and browser video
+buttons for Windows, with an early Linux x64 preview. Original open-source
+implementation; not affiliated with Internet
 Download Manager and not a complete feature-for-feature replacement.
 
 **Early preview:** Private/sign-in-required, DRM and live media are unsupported. Please report bugs
@@ -18,6 +19,11 @@ the desktop app.
 
 The installer is currently an unsigned preview. Browser video buttons require
 one manual "Load unpacked" setup; Chrome/Edge store listings are not available.
+
+Linux x86-64 preview builds are published on the same release page as a
+**tar.gz** archive and an **AppImage**. See the
+[installation guide](docs/INSTALL.md) for the Linux steps and their current
+limitations.
 
 ## Features
 
@@ -45,7 +51,9 @@ npm start
 
 `npm run package` builds the unpacked application. `npm run dist` builds a local
 NSIS installer, without publishing. `npm run dist:portable` builds a portable
-executable. See [release requirements](docs/RELEASING.md) before distributing
+executable. On Linux x64, `npm run dist:linux` builds a tar.gz archive and an
+AppImage (`dist:linux:tar` / `dist:linux:appimage` build one target each). See
+[release requirements](docs/RELEASING.md) before distributing
 either. Current builds are unsigned and have no auto-updater.
 
 The optional legacy extractor is described in [THIRD-PARTY.md](THIRD-PARTY.md).

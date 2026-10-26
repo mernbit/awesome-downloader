@@ -57,15 +57,9 @@ if (process.argv.includes('--native-host')) {
           // executable files: do not overwrite an already identical connector.
           filter: require('./resource-copy.cjs').copyIfChanged
         });
-        const quoteBatch = value => String(value).replaceAll('%', '%%');
-        await fs.writeFile(path.join(integrationRoot, 'integration', 'native-host.cmd'),
-          `@echo off\r\nset ELECTRON_RUN_AS_NODE=1\r\n"${quoteBatch(app.getPath('exe'))}" "%~dp0native-host.cjs"\r\n`);
       }
       // Use the bundled runtime even in development; browsers need not inherit Node's PATH.
-      if (!app.isPackaged) {
-        const fs = require('node:fs/promises');
-        await fs.writeFile(path.join(integrationRoot, 'integration', 'native-host.cmd'), `@echo off\r\nset ELECTRON_RUN_AS_NODE=1\r\n"${app.getPath('exe').replaceAll('%', '%%')}" "%~dp0native-host.cjs"\r\n`);
-      }
+      await require('./platform.cjs').writeNativeHostLauncher(integrationRoot, app.getPath('exe'));
       let connectedBrowsers = [], connectionError = '';
       await require('./browser-registration.cjs').prepareNativeHost(integrationRoot, app.getPath('exe'));
       await require('node:fs/promises').writeFile(path.join(integrationRoot, 'integration', 'desktop-launch.json'), JSON.stringify({executable:app.getPath('exe'),args:app.isPackaged ? [] : [root]}));
@@ -104,7 +98,13 @@ if (process.argv.includes('--native-host')) {
             const result = await shell.openPath(d.path); if (result) throw new Error(result);
           } else if (action === 'openWith') {
             if (d.status !== 'complete' || !d.path) throw new Error('This download has not finished.');
-            await new Promise((resolve,reject)=>require('node:child_process').execFile(path.join(process.env.SystemRoot||'C:\\Windows','System32','OpenWith.exe'),[d.path],{windowsHide:true},error=>error?reject(error):resolve()));
+            if (require('./platform.cjs').isWindows) {
+              await new Promise((resolve,reject)=>require('node:child_process').execFile(path.join(process.env.SystemRoot||'C:\\Windows','System32','OpenWith.exe'),[d.path],{windowsHide:true},error=>error?reject(error):resolve()));
+            } else {
+              // Linux has no per-file chooser dialog; open the default application.
+              const error = await shell.openPath(d.path);
+              if (error) throw new Error(error);
+            }
           } else if (action === 'reveal') { if (d.path) shell.showItemInFolder(d.path); else await shell.openPath(d.directory); }
           else return engine.action(id, action);
         },

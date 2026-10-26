@@ -13,10 +13,14 @@ download asset just because a local package command succeeds.
 4. `npm run dist` builds an unsigned per-user NSIS installer. Test it on a clean
    Windows machine without Node.js: install, launch, extension setup, native handoff,
    download with audio, completion, update, and uninstall.
-5. Publish a **prerelease** until the clean-machine checks and known limitations
-   are documented. Attach installer, checksums, notices, and required source assets.
-6. Never attach research, browser profiles, diagnostics with media URLs, or user data.
-7. Enable repository Issues and private vulnerability reporting. Review incoming
+5. `npm run dist:linux` builds unsigned Linux x64 tar.gz and AppImage previews.
+   Test one on a clean Linux machine: launch, extension setup, native handoff and
+   a real download. Real-browser validation on Linux is still open work; do not
+   present the Linux preview as fully supported.
+6. Publish a **prerelease** until the clean-machine checks and known limitations
+   are documented. Attach installers, checksums, notices, and required source assets.
+7. Never attach research, browser profiles, diagnostics with media URLs, or user data.
+8. Enable repository Issues and private vulnerability reporting. Review incoming
    pull requests; contributors do not need write/admin access to submit them.
 
 Current gates: GitHub authentication, dependency source-distribution audit,

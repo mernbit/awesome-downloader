@@ -1,9 +1,13 @@
 # Contributor start here
 
-Awesome Downloader is an early Windows x64 preview. Downloads and Chrome/Edge
+Awesome Downloader is an early Windows x64 preview with an early Linux x64
+preview build. Downloads and Chrome/Edge
 integration exist, but reliability, sustained speed and user experience still
-need work. Linux, macOS, Windows ARM64, broader browser support and playlists are
-approved development goals, not released capabilities.
+need work. macOS, Windows ARM64, broader browser support and playlists are
+approved development goals, not released capabilities. Linux tar.gz/AppImage
+packaging and native messaging registration have been implemented and are
+covered by CI, but end-to-end validation on real Linux browsers is still open
+work on the Linux goal.
 
 ## Our strategy
 
@@ -54,7 +58,7 @@ prerequisite is ready.
 
 | Goal | Implementation order |
 | --- | --- |
-| [Linux #6](https://github.com/Ahmadkhattak1/awesome-downloader/issues/6) | Shared adapters #14 → runtime/integration #22 → packaging/validation #23 |
+| [Linux #6](https://github.com/Ahmadkhattak1/awesome-downloader/issues/6) | Shared adapters #14 → runtime/integration #22 → packaging/validation #23 (packaging and integration code landed; real-browser validation remains) |
 | [macOS #7](https://github.com/Ahmadkhattak1/awesome-downloader/issues/7) | Shared adapters #14 → runtime/integration #24 → packaging/validation #25 |
 | [Windows ARM64 #8](https://github.com/Ahmadkhattak1/awesome-downloader/issues/8) | Shared adapters #14 → runtime/dependencies #26 → installer/hardware validation #27 |
 | [Firefox #10](https://github.com/Ahmadkhattak1/awesome-downloader/issues/10) | Capture/integration #28 → persistent installation/setup #29 |
@@ -96,7 +100,8 @@ release decision.
 
 - Add regression coverage for behavior you change and explain what you tested.
 - Distinguish fixtures, live-browser testing and real-device testing. A passing
-  build does not establish support for an operating system or architecture.
+  build does not establish support for an operating system or architecture;
+  this applies to the new Linux builds as much as anywhere else.
 - Preserve transfer integrity, audio/video pairing, cancellation, credential
   boundaries and existing Windows behavior.
 - Keep credentials, signed media URLs and browser profiles out of public reports.
